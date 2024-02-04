@@ -12,4 +12,11 @@
     fill: white;
     font: 10px sans-serif;
   }
+
+.column-container{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-wrap: nowrap;
+}
   

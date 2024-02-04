@@ -10,16 +10,79 @@
 </head>
 <body>
     <div>
-        <h3>Institution Race Bar chart using d3js </h3>
+        <h3 id="headerText">D3Charts lab</h3>
+        <div class="container column-container">
+          <div class="row">
+            <div class="col">
+              <label for="fetchTypeID">Select progressive display or year-by-year display:</label>
+                <select id="fetchTypeID" name="fetchType" class="form-select">
+                  <option value="">Select any from below</option>
+                  <option value="progressive">Progressive</option>
+                  <option value="year-by-year">Year By Year</option>
+                </select>
+            </div>
+            <div class="col">
+              <label for="fetchDataID">Select Data for chart:</label>
+              <select id="fetchDataID" name="fetchData" class="form-select">
+                <option value="">Select any from below</option>
+                <option value="name">Instituitions</option>
+                <option value="country">Countries</option>
+              </select>
+            </div>
+            <div class="col">
+              <button id="submitButton" style="display: none;" class="btn btn-primary" />
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" id="loadMsg" style="display: none;">
+          </div>
+        </div>
         <div id="chart"></div>
           <button id="replayButton" style="display: none;" class="btn btn-primary" />
       </div>
       <script type="module">
+        import { dataSelector } from './js/dataSelector.js';
         import { createRaceBarChart } from './js/raceBarChart.js';
-          window.onload = function() {
-              createRaceBarChart(d3, 'chart', 500, 300, { top: 30, right: 30, bottom: 30, left: 110 }, 'name');
-              //createRaceBarChart(d3, 'chart', 500, 300, { top: 30, right: 30, bottom: 30, left: 110 }, 'country');
-          };
+        let fetchDataType, fetchDataName;
+        const valueMap = {
+                  "name":"Loading Institutions Data",
+                  "country":"Loading Countries Data",
+                  "": "Invalid Data, Please select data"
+        };
+        let submitButton = document.getElementById("submitButton");
+        submitButton.style.display = 'block';
+        submitButton.innerHTML = "Submit";
+        function fetchRecords(dataType, dataName){
+          let headerText = document.getElementById('headerText');          
+          if(dataType && dataName){
+            let fetchText = dataName=="name"?"Institutions":"Countries";
+            headerText.innerHTML = `${fetchText} Race Bar chart using d3js`;
+            //clear chart and replaybutton
+            d3.select('#chart').selectAll("*").remove();
+            document.getElementById('replayButton').style.display = 'none';
+            //drawChart
+            dataSelector(d3, dataType, 'chart', dataName);            
+          }else{
+            headerText.innerHTML = "D3Charts lab";
+            console.error("Invalid selection. Please select values from both dropdowns.");
+
+            //clear chart and replaybutton
+            d3.select('#chart').selectAll("*").remove();
+            document.getElementById('replayButton').style.display = 'none';            
+          }
+        }
+        document.getElementById("submitButton").addEventListener('click', function(event) {
+          event.preventDefault();
+
+          fetchDataType = document.getElementById('fetchTypeID').value;
+          fetchDataName = document.getElementById('fetchDataID').value;
+          const msg = valueMap[fetchDataName] || valueMap[""];
+          let displayMsg = document.getElementById('loadMsg');
+          displayMsg.style.display = 'block';
+          displayMsg.innerHTML = fetchDataType==""?valueMap[""]: msg;
+          fetchRecords(fetchDataType, fetchDataName);
+        });
       </script>
 </body>
 </html>
