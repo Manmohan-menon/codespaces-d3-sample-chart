@@ -1,4 +1,4 @@
-#replayButton {
+.replay-bttn-class {
     margin: 20px;
     padding: 10px;
     font-size: 16px;
@@ -18,5 +18,15 @@
   flex-direction: column;
   gap: 15px;
   flex-wrap: nowrap;
+}
+.submit-bttn-class{
+  padding: 0.5rem 1rem 0.5rem 1rem !important;
+  margin-top: 1rem;
+  margin-left: 4rem;
+  margin-block-end: auto;
+}
+.current-note{
+  fill: black;
+  font: 10px sans-serif;
 }
   

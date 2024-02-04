@@ -2,7 +2,7 @@ import { createRaceBarChart } from './raceBarChart.js';
 export async function dataSelector(lib, dataType, targetElementId, chartKey){
     let response;
     const cumulativeData = {};
-    response = chartKey=="name" ? await fetch('/data/institutions.json'): await fetch('/data/countries.json');
+    response = chartKey=="name" ? await fetch('/data/companies.json'): await fetch('/data/countries.json');
     const fetchData = await response.json();
     const years =  Object.keys(fetchData[0].overall);
     if(dataType=="progressive"){

@@ -14,14 +14,35 @@ export async function createRaceBarChart(d3, targetElementId, transformedData, c
  
   svg.append("g")
      .attr("class", "y-axis");
- 
-  const yearLabel = svg.append("text")
-     .attr("class", "current-year")
-     .attr("x", width)
-     .attr("y", height + margin.bottom - 40)
-     .attr("text-anchor", "end")
-     .attr("font-size", "1.5em")
-     .text("");
+   
+   function appendText(svg, x, y, labelClass, textAnchor, fontSize) {
+      return svg.append("text")
+         .attr("class", labelClass)
+         .attr("x", x)
+         .attr("y", y)
+         .attr("text-anchor", textAnchor)
+         .attr("font-size", fontSize)
+         .text("");
+   }
+     
+   let yearLabel, noteLabel;
+     
+   if(dataType == "year-by-year" && chartKey == "country"){
+      yearLabel = appendText(svg, width, height + margin.bottom - 80,"current-year", "end", "1.5em");
+      noteLabel = appendText(svg, width, height + margin.bottom - 40, "current-note","end", "1.5em");
+   } else {
+      yearLabel = appendText(svg, width, height + margin.bottom - 40, "current-year","end", "1.5em");
+   }
+   function getNoteText(year) {
+      const noteMap = {
+        "2018": "Previous share of the Companies",
+        "2021": "Shares of the Companies",
+        "Present": "Leading share of the Companies in the present fiscal year"
+      };
+      const defaultNote = "";
+      let note = noteMap[year] || defaultNote
+      return note;
+   }
  
   function draw(year) {
      const sortedData = dataType === "progressive" ? 
@@ -34,6 +55,9 @@ export async function createRaceBarChart(d3, targetElementId, transformedData, c
      updateAxes(svg, xScale, yScale);
      updateBarsAndLabels(svg, sortedData, xScale, yScale, key, dataType);
      yearLabel.text(year);
+     if(dataType == "year-by-year" && chartKey == "country"){
+      noteLabel.text(getNoteText(year));
+     } 
   }
  
   function animate() {

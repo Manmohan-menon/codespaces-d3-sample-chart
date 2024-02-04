@@ -25,12 +25,12 @@
               <label for="fetchDataID">Select Data for chart:</label>
               <select id="fetchDataID" name="fetchData" class="form-select">
                 <option value="">Select any from below</option>
-                <option value="name">Instituitions</option>
+                <option value="name">Companies</option>
                 <option value="country">Countries</option>
               </select>
             </div>
             <div class="col">
-              <button id="submitButton" style="display: none;" class="btn btn-primary" />
+              <button id="submitButton" style="display: none;" class="btn btn-primary submit-bttn-class" />
             </div>
           </div>
         </div>
@@ -39,24 +39,25 @@
           </div>
         </div>
         <div id="chart"></div>
-          <button id="replayButton" style="display: none;" class="btn btn-primary" />
+          <button id="replayButton" style="display: none;" class="btn btn-primary replay-bttn-class" />
       </div>
       <script type="module">
         import { dataSelector } from './js/dataSelector.js';
         import { createRaceBarChart } from './js/raceBarChart.js';
         let fetchDataType, fetchDataName;
         const valueMap = {
-                  "name":"Loading Institutions Data",
+                  "name":"Loading Companies Data",
                   "country":"Loading Countries Data",
                   "": "Invalid Data, Please select data"
         };
         let submitButton = document.getElementById("submitButton");
         submitButton.style.display = 'block';
         submitButton.innerHTML = "Submit";
+
         function fetchRecords(dataType, dataName){
           let headerText = document.getElementById('headerText');          
           if(dataType && dataName){
-            let fetchText = dataName=="name"?"Institutions":"Countries";
+            let fetchText = dataName=="name"?"Companies":"Countries";
             headerText.innerHTML = `${fetchText} Race Bar chart using d3js`;
             //clear chart and replaybutton
             d3.select('#chart').selectAll("*").remove();
