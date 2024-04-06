@@ -9,7 +9,7 @@ export async function dataSelector(lib, dataType, targetElementId, chartKey){
         fetchData.forEach(data => {
             cumulativeData[data[chartKey]] = { value: 0, color: data.color };
           });
-          //console.log("current progressive data: ",fetchData)
+          console.log("current progressive data: ",fetchData)
           createRaceBarChart(lib, targetElementId, fetchData,cumulativeData, years, dataType, chartKey);        
     }else{
         let transformedData = [];
@@ -34,7 +34,7 @@ export async function dataSelector(lib, dataType, targetElementId, chartKey){
         transformedData.forEach(data => {
             cumulativeData[data[chartKey]] = { value: 0, color: data.color };
         });
-        //console.log("current year-by-year data: ",transformedData);
+        console.log("current year-by-year data: ",transformedData);
         createRaceBarChart(lib, targetElementId, transformedData,cumulativeData, years, dataType, chartKey);
     }
     

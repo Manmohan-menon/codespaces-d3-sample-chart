@@ -38,7 +38,7 @@
           <div class="card-body" id="loadMsg" style="display: none;">
           </div>
         </div>
-        <div id="chart"></div>
+        <div id="chart" style="width: 650px; height: 300px;"></div>
           <button id="replayButton" style="display: none;" class="btn btn-primary replay-bttn-class" />
       </div>
       <script type="module">
@@ -59,7 +59,7 @@
           if(dataType && dataName){
             let fetchText = dataName=="name"?"Companies":"Countries";
             headerText.innerHTML = `${fetchText} Race Bar chart using d3js`;
-            //clear chart and replaybutton
+
             d3.select('#chart').selectAll("*").remove();
             document.getElementById('replayButton').style.display = 'none';
             //drawChart
@@ -68,7 +68,6 @@
             headerText.innerHTML = "D3Charts lab";
             console.error("Invalid selection. Please select values from both dropdowns.");
 
-            //clear chart and replaybutton
             d3.select('#chart').selectAll("*").remove();
             document.getElementById('replayButton').style.display = 'none';            
           }
